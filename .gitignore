@@ -108,3 +108,10 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+# Remote System Temp Files
+RemoteSystemsTempFiles/
+
+# Debug Files
+Debug*/
+msp432p401r.lds
+msp432_startup_ccs_gcc.c
