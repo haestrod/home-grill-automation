@@ -1,4 +1,4 @@
-<?php namespace Home-Grill-Automation\Events;
+<?php namespace App\Events;
 
 abstract class Event {
 

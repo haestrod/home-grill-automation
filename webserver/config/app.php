@@ -139,11 +139,11 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
-		'Home-Grill-Automation\Providers\AppServiceProvider',
-		'Home-Grill-Automation\Providers\BusServiceProvider',
-		'Home-Grill-Automation\Providers\ConfigServiceProvider',
-		'Home-Grill-Automation\Providers\EventServiceProvider',
-		'Home-Grill-Automation\Providers\RouteServiceProvider',
+		'App\Providers\AppServiceProvider',
+		'App\Providers\BusServiceProvider',
+		'App\Providers\ConfigServiceProvider',
+		'App\Providers\EventServiceProvider',
+		'App\Providers\RouteServiceProvider',
 
 	],
 

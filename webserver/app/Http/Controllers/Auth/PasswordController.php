@@ -1,6 +1,6 @@
-<?php namespace Home-Grill-Automation\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\Auth;
 
-use Home-Grill-Automation\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;

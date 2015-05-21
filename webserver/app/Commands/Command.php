@@ -1,4 +1,4 @@
-<?php namespace Home-Grill-Automation\Commands;
+<?php namespace App\Commands;
 
 abstract class Command {
 

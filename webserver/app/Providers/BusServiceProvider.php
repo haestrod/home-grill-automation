@@ -1,4 +1,4 @@
-<?php namespace Home-Grill-Automation\Providers;
+<?php namespace App\Providers;
 
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +16,7 @@ class BusServiceProvider extends ServiceProvider {
 		$dispatcher->mapUsing(function($command)
 		{
 			return Dispatcher::simpleMapping(
-				$command, 'Home-Grill-Automation\Commands', 'Home-Grill-Automation\Handlers\Commands'
+				$command, 'App\Commands', 'App\Handlers\Commands'
 			);
 		});
 	}

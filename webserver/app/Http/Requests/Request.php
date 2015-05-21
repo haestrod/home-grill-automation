@@ -1,4 +1,4 @@
-<?php namespace Home-Grill-Automation\Http\Requests;
+<?php namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

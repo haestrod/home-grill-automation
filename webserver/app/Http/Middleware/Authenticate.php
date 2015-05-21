@@ -1,4 +1,4 @@
-<?php namespace Home-Grill-Automation\Http\Middleware;
+<?php namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

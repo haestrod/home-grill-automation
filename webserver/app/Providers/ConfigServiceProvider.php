@@ -1,4 +1,4 @@
-<?php namespace Home-Grill-Automation\Providers;
+<?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
