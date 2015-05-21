@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace Home-Grill-Automation;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

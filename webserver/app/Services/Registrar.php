@@ -1,6 +1,6 @@
-<?php namespace App\Services;
+<?php namespace Home-Grill-Automation\Services;
 
-use App\User;
+use Home-Grill-Automation\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 
