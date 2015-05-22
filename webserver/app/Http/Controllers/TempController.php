@@ -11,17 +11,18 @@ class TempController extends BaseController
 	public function postTemp($data) {
 		$v = floatval($data); // voltage value
 		// Temperature calculation
-	        $temp = 0.226584602 + 24152.109 * $v
-			+ 67233.4248 * ($v**2)
-        	        + 2210340.682 * ($v**3)
-			+ -860963914.9 * ($v**4)
-                	+ 48350600000 * ($v**5)
-			+ -1.18452 * (10**12) * ($v**6)
-                	+ -1.3869 * (10**13) * ($v**7)
-                	+ -6.33708 * (10**13) * ($v**8);
+	        #$temp = 0.226584602 + 24152.109 * $v
+		#	+ 67233.4248 * ($v**2)
+        	#        + 2210340.682 * ($v**3)
+		#	+ -860963914.9 * ($v**4)
+                #	+ 48350600000 * ($v**5)
+		#	+ -1.18452 * (10**12) * ($v**6)
+                #	+ -1.3869 * (10**13) * ($v**7)
+                #	+ -6.33708 * (10**13) * ($v**8);
+		$temp = $v; // no temp calculation
 
 		// Record the temperature
-		$tempn = Temp::create(['temp' => $temp]);
+		$tempn = Temp::create(['temp' => $temp, 'voltage' => $v]);
 
 		return response()->json('success');
 	}

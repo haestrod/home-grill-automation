@@ -17,6 +17,7 @@ class CreateTempTable extends Migration {
 			$table->bigIncrements('id');
 			$table->timestamps();
 			$table->float('temp');
+			$table->float('voltage');
 		});
 	}
 
