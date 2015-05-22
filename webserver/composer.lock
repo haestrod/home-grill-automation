@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f4bffe4283258a89be31f0c0d008f3cc",
+    "hash": "f833db97130ec6a714c12df60f27224f",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -128,6 +128,38 @@
                 "string"
             ],
             "time": "2014-12-20 21:24:13"
+        },
+        {
+            "name": "elliottb/phpgraphlib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elliottb/phpgraphlib.git",
+                "reference": "3b0ee1d9828d4a4c35def65404432f986edd0650"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elliottb/phpgraphlib/zipball/3b0ee1d9828d4a4c35def65404432f986edd0650",
+                "reference": "3b0ee1d9828d4a4c35def65404432f986edd0650",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP Graphing Library that creates graphs natively in PHP",
+            "homepage": "http://github.com/elliottb/phpgraphlib",
+            "keywords": [
+                "gd",
+                "graph",
+                "graphing",
+                "graphs"
+            ],
+            "time": "2014-03-25 06:01:57"
         },
         {
             "name": "illuminate/auth",
@@ -3242,7 +3274,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "elliottb/phpgraphlib": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

@@ -1,12 +1,13 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "hardolaf/Home-Grill-Automation",
+    "description": "Home Grill Automation.",
+    "keywords": ["home", "grill", "automation"],
     "license": "MIT",
     "type": "project",
     "require": {
         "laravel/lumen-framework": "5.0.*",
-        "vlucas/phpdotenv": "~1.0"
+        "vlucas/phpdotenv": "~1.0",
+	"elliottb/phpgraphlib" : "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
