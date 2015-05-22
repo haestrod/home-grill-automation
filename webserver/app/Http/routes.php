@@ -11,4 +11,6 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+$app->get('/', function() use ($app) {
+    return $app->welcome();
+});
