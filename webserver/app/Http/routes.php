@@ -14,3 +14,8 @@
 $app->get('/', function() use ($app) {
     return $app->welcome();
 });
+
+$app->put('temp/{data}', 'App\Http\Controllers\TempController@postTemp');
+
+$app->get('temp', 'App\Http\Controllers\TempController@getTemp');
+
