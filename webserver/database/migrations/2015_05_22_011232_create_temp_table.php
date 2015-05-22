@@ -12,7 +12,7 @@ class CreateTempTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('temp', function(Blueprint $table)
+		Schema::create('temps', function(Blueprint $table)
 		{
 			$table->bigIncrements('id');
 			$table->timestamps();
@@ -27,7 +27,7 @@ class CreateTempTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('temp');
+		Schema::drop('temps');
 	}
 
 }
