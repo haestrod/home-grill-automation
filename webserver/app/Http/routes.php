@@ -11,11 +11,17 @@
 |
 */
 
-$app->get('/', function() use ($app) {
-    return $app->welcome();
+$app->get('/', function() {
+    return view('index');
 });
 
 $app->put('temp/{data}', 'App\Http\Controllers\TempController@postTemp');
 
 $app->get('temp', 'App\Http\Controllers\TempController@getTemp');
+
+$app->get('temp/since/{time}', 'App\Http\Controllers\TempController@getTempSince');
+
+$app->get('temp/last', 'App\Http\Controllers\TempController@getLastTemp');
+
+$app->delete('temp', 'App\Http\Controllers\TempController@truncate');
 
