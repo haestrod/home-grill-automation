@@ -28,7 +28,7 @@ class TempController extends BaseController
 	}
 
 	public function getTemp() {
-		$temps = Temp::where('createdAt', '>', time()-(60*60))->get();
+		$temps = Temp::where('created_at', '>', time()-(60*60))->get();
 
 		return response()->json($temps);
 	}
@@ -38,9 +38,9 @@ class TempController extends BaseController
 
 		if ($time >= time() ) {
 			// Default to lat 60 seconds of data
-			$data = Temp::where('createdAt', '>', time()-60)->get();
+			$data = Temp::where('created_at', '>', time()-60)->get();
 		} else {
-			$data = Temp::where('createdAt', '>', $time)->get();
+			$data = Temp::where('created_at', '>', $time)->get();
 		}
 
 
@@ -48,7 +48,7 @@ class TempController extends BaseController
 	}
 
 	public function getLastTemp() {
-		$temp = Temp::orderBy('createdAt', 'desc')->first();
+		$temp = Temp::orderBy('created_at', 'DESC')->first();
 		return response()->json($temp);
 	}
 

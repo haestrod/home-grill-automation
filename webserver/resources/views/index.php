@@ -17,7 +17,7 @@ var lastID = 0;
 $.getJSON(urlStart, function(ret) {
   startVolt.push(ret.voltage);
   startTemp.push(ret.temp);
-  startLabel.push(ret.createdAt);
+  startLabel.push(ret.created_at);
   lastID = ret.id;
 });
 
@@ -48,14 +48,16 @@ setInterval(function(){
   var newTemp = [];
   var labels = [];
   var curTime = Math.floor(Date.now() / 1000);
-  var reqTime = curTime + 30;
+  var reqTime = curTime - 30;
   var curID = 0;
-  var url = "http://192.168.159.166:8000/temp/last";
+  var url = "http://192.168.159.166:8000/temp/since/" + reqTime;
   $.getJSON(url, function(k) {
-      newVolt.push(k.voltage);
-      newTemp.push(k.temp);
-      labels.push(k.createdat);
-      curID = k.id;
+      $.each(k, function(q) {
+        newVolt.push(q.voltage);
+        newTemp.push(q.temp);
+        labels.push(q.created_at);
+        curID = q.id;
+      });
   });
 
   if (curID != lastID) {

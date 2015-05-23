@@ -16,6 +16,7 @@ $app->get('/', function() {
 });
 
 $app->put('temp/{data}', 'App\Http\Controllers\TempController@postTemp');
+$app->get('temp/insert/{data}', 'App\Http\Controllers\TempController@postTemp');
 
 $app->get('temp', 'App\Http\Controllers\TempController@getTemp');
 
