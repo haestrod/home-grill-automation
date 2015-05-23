@@ -70,15 +70,31 @@ void setup() {
   Serial.println("\nIP Address obtained");
   printWifiStatus();
 
+  //Upload(654321);
+}
+
+void Upload(int CurrentValue) {
+
   Serial.println("\nStarting connection to server...");
   // if you get a connection, report back via serial:
   if (client.connect(server, 8000)) {
     Serial.println("connected to server");
     // Make a HTTP request:
-    client.println("PUT /temp/"+CurrentVoltage+" HTTP/1.1");
+    //CurrentValue = 12345;
+    client.print("GET /temp/insert/");
+    Serial.print("GET /temp/insert/");
+    client.print(CurrentValue);
+    Serial.print(CurrentValue);
+    client.println(" HTTP/1.1");
+    Serial.println(" HTTP/1.1");
     client.println("Host: 192.168.159.166");
+    Serial.println("Host: 192.168.159.166");
+    //client.println("Content-Length: 0");
+    //Serial.println("Content-Length: 0");
     client.println("Connection: close");
+    Serial.println("Connection: close");
     client.println();
+    Serial.println("%%%%%%%%%%%%");
   }
 }
 
