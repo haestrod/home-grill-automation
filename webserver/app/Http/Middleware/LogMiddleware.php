@@ -14,7 +14,7 @@ class LogMiddleware {
      */
     public function handle($request, Closure $next)
     {
-	Log::warning((string) $request);
+	//Log::info((string) $request);
         return $next($request);
     }
 

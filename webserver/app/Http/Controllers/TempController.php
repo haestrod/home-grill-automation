@@ -5,26 +5,28 @@ use App\Temp;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Log;
 
 class TempController extends BaseController
 {
-	public function postTemp($data) {
-		$v = floatval($data); // voltage value
+	public function postTemp(Request $request) {
+		$data = substr(strrchr($request, 'sensor1='), 5);
+		$data = intval($data);
+		$v = floatval($data) * 3.3 / 16384;
 		// Temperature calculation
-	        #$temp = 0.226584602 + 24152.109 * $v
-		#	+ 67233.4248 * ($v**2)
-        	#        + 2210340.682 * ($v**3)
-		#	+ -860963914.9 * ($v**4)
-                #	+ 48350600000 * ($v**5)
-		#	+ -1.18452 * (10**12) * ($v**6)
-                #	+ -1.3869 * (10**13) * ($v**7)
-                #	+ -6.33708 * (10**13) * ($v**8);
-		$temp = $v; // no temp calculation
+	        $temp = 0.226584602 + 24152.109 * $v
+			+ 67233.4248 * ($v**2)
+			+ 2210340.682 * ($v**3)
+			+ -860963914.9 * ($v**4)
+			+ 48350600000 * ($v**5)
+			+ -1.18452 * (10**12) * ($v**6)
+			+ -1.3869 * (10**13) * ($v**7)
+			+ -6.33708 * (10**13) * ($v**8);
 
 		// Record the temperature
 		$tempn = Temp::create(['temp' => $temp, 'voltage' => $v]);
 
-		return response()->json('success');
+		return response()->json($temp);
 	}
 
 	public function getTemp() {
