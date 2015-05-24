@@ -9,16 +9,18 @@
 	<body>
 		<canvas id="updating-chart" width="920" height="600"></canvas>
 		<script>
-var urlStart = window.location.origin + "/temp/last";
+var urlStart = window.location.origin + "/temp/get/20";
 var startVolt = [];
 var startTemp = [];
 var startLabel = [];
 var lastID = 0;
 $.getJSON(urlStart, function(ret) {
-  startVolt.push(ret.voltage);
-  startTemp.push(ret.temp);
-  startLabel.push(ret.created_at);
-  lastID = ret.id;
+  $.each(ret, function(q) {
+    startVolt.push(ret[q].voltage);
+    startTemp.push(ret[q].temp);
+    startLabel.push(ret[q].created_at);
+    lastID = ret[q].id;
+  })
 });
 
 var canvas = document.getElementById('updating-chart'),
@@ -35,6 +37,7 @@ var canvas = document.getElementById('updating-chart'),
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(151,187,205,1)",
               data: startVolt,
+              scaleIntergersOnly: false
           }
       ]
     };
@@ -42,29 +45,24 @@ var canvas = document.getElementById('updating-chart'),
 // Reduce the animation steps for demo clarity.
 var myLiveChart = new Chart(ctx).Line(startingData);
 
-
+var refreshTime = 10000;
 setInterval(function(){
-  var newVolt = [];
-  var newTemp = [];
-  var labels = [];
   var curTime = Math.floor(Date.now() / 1000);
-  var reqTime = curTime - 30;
+  var reqTime = curTime - (refreshTime / 1000);
   var curID = 0;
   var url = window.location.origin + "/temp/since/" + reqTime;
   $.getJSON(url, function(k) {
       $.each(k, function(q) {
-        newVolt.push(q.voltage);
-        newTemp.push(q.temp);
-        labels.push(q.created_at);
-        curID = q.id;
+	if (k[q].id > lastID) {
+        	myLiveChart.addData([k[q].voltage], k[q].created_at);
+        	//newTemp.push(k[q].temp);
+        	//labels.push(k[q].created_at);
+        	lastID = k[q].id;
+	}
+	myLiveChart.update();
       });
   });
-
-  if (curID != lastID) {
-//    curID; = newVolt
-    myLiveChart.addData(newVolt, labels);
-  }
-}, 30000);
+}, refreshTime);
 
 		</script>
 	</body>

@@ -58,5 +58,12 @@ class TempController extends BaseController
 		Temp::truncate();
 		return response()->json('success');
 	}
+
+	public function getNum($num) {
+		$lastId = Temp::orderBy('id', 'DESC')->first()->id;
+		$num = intval($num);
+		$data = Temp::where('id', '>', $lastId - $num)->get();
+		return response()->json($data);
+	}
 }
 

@@ -27,3 +27,5 @@ $app->get('temp/last', 'App\Http\Controllers\TempController@getLastTemp');
 
 $app->delete('temp', 'App\Http\Controllers\TempController@truncate');
 
+$app->get('temp/get/{num}', 'App\Http\Controllers\TempController@getNum');
+
