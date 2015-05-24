@@ -15,8 +15,9 @@ $app->get('/', function() {
     return view('index');
 });
 
-$app->put('temp/{data}', 'App\Http\Controllers\TempController@postTemp');
-$app->get('temp/insert/{data}', 'App\Http\Controllers\TempController@postTemp');
+$app->put('temp', 'App\Http\Controllers\TempController@postTemp');
+$app->post('temp', 'App\Http\Controllers\TempController@postTemp');
+//$app->get('temp/insert/{data}', 'App\Http\Controllers\TempController@postTemp');
 
 $app->get('temp', 'App\Http\Controllers\TempController@getTemp');
 
