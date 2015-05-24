@@ -13,7 +13,7 @@ static volatile uint16_t curADCResult;
 // your network name also called SSID
 char ssid[] = "nsa";
 // your network password
-char password[] = "youcantrustthis";
+char password[] = "";
 
 // if you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
@@ -26,43 +26,28 @@ IPAddress server(192,168,159,166);  // numeric IP for server (no DNS)
 WiFiClient client;
 
 void wificonnect() {
-  //Initialize serial and wait for port to open:
-  Serial.begin(115200);
-
-  // attempt to connect to Wifi network:
-  Serial.print("Attempting to connect to Network named: ");
-  // print the network name (SSID);
-  Serial.println(ssid); 
   // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
   WiFi.begin(ssid, password);
   while ( WiFi.status() != WL_CONNECTED) {
-    // print dots while we wait to connect
-    Serial.print(".");
     delay(300);
   }
-  
-  Serial.println("\nYou're connected to the network");
-  Serial.println("Waiting for an ip address");
   
   while (WiFi.localIP() == INADDR_NONE) {
     // print dots while we wait for an ip addresss
-    Serial.print(".");
     delay(300);
   }
-
-  Serial.println("\nIP Address obtained");
-  printWifiStatus();
 }
 
 void setup() {
+  //Initialize serial and wait for port to open:
+  Serial.begin(115200);
   wificonnect();
+  analogReadResolution(14);
 }
 
 void Upload(int CurrentValue) {
-  Serial.println("\nStarting connection to server...");
   // if you get a connection, report back via serial:
   if (client.connect(server, 8000)) {
-    Serial.println("connected to server");
     // Make a HTTP request:
     client.println("POST /temp HTTP/1.1");
     client.println("Host: 192.168.159.166:8000");
@@ -70,7 +55,6 @@ void Upload(int CurrentValue) {
     client.print("Content-Length: ");
     int thisLength = 8 + getLength(CurrentValue);
     client.println(thisLength);
-//    client.println("Content-Type: text/csv");
     client.println("Connection: close");
     client.println();
     client.print("sensor1=");
@@ -81,7 +65,8 @@ void Upload(int CurrentValue) {
 }
 
 void loop() {
-  curADCResult = analogRead(A14);
+  curADCResult = analogRead(A6);
+  Serial.println(curADCResult);
 //  normalizedADCRes = (curADCResult * 3.3) / 16384;
 
   Upload(curADCResult);
@@ -93,31 +78,6 @@ void loop() {
     client.flush();
   }
   delay(10000);
-  // if the server's disconnected, stop the client:
-/*  if (!client.connected()) {
-    Serial.println();
-    Serial.println("disconnecting from server.");
-    client.stop();
-    wificonnect();
-  }*/
-}
-
-
-void printWifiStatus() {
-  // print the SSID of the network you're attached to:
-  Serial.print("SSID: ");
-  Serial.println(WiFi.SSID());
-
-  // print your WiFi shield's IP address:
-  IPAddress ip = WiFi.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
-
-  // print the received signal strength:
-  long rssi = WiFi.RSSI();
-  Serial.print("signal strength (RSSI):");
-  Serial.print(rssi);
-  Serial.println(" dBm");
 }
 
 // This method calculates the number of digits in the
