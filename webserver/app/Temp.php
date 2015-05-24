@@ -5,5 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 class Temp extends Model
 {
 	protected $fillable= ['temp', 'voltage'];
+
+	protected function getDateFormat() {
+		return 'U';
+	}
 }
 
