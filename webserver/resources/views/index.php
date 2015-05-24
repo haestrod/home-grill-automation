@@ -9,7 +9,7 @@
 	<body>
 		<canvas id="updating-chart" width="920" height="600"></canvas>
 		<script>
-var urlStart = "http://192.168.159.166:8000/temp/last";
+var urlStart = window.location.origin + "/temp/last";
 var startVolt = [];
 var startTemp = [];
 var startLabel = [];
@@ -50,7 +50,7 @@ setInterval(function(){
   var curTime = Math.floor(Date.now() / 1000);
   var reqTime = curTime - 30;
   var curID = 0;
-  var url = "http://192.168.159.166:8000/temp/since/" + reqTime;
+  var url = window.location.origin + "/temp/since/" + reqTime;
   $.getJSON(url, function(k) {
       $.each(k, function(q) {
         newVolt.push(q.voltage);
@@ -61,10 +61,10 @@ setInterval(function(){
   });
 
   if (curID != lastID) {
-    lastID = curID;
+//    curID; = newVolt
     myLiveChart.addData(newVolt, labels);
   }
-}, 3000);
+}, 30000);
 
 		</script>
 	</body>
