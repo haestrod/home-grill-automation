@@ -1,31 +1,14 @@
-
-/*
-  Web client
-
- This sketch connects to a website (http://www.google.com)
- using a WiFi shield.
-
- This example is written for a network using WPA encryption. For
- WEP or WPA, change the Wifi.begin() call accordingly.
-
- This example is written for a network using WPA encryption. For
- WEP or WPA, change the Wifi.begin() call accordingly.
-
- Circuit:
- * WiFi shield attached
-
- created 13 July 2010
- by dlf (Metodo2 srl)
- modified 31 May 2012
- by Tom Igoe
- */
-
-
 #ifndef __CC3200R1M1RGC__
 // Do not include SPI for CC3200 LaunchPad
 #include <SPI.h>
 #endif
 #include <WiFi.h>
+//#include <stdint.h>
+//#include <stdbool.h>
+//#include "driverlib.h"
+
+static volatile uint16_t curADCResult;
+static volatile float normalizedADCRes;
 
 // your network name also called SSID
 char ssid[] = "nsa";
@@ -42,7 +25,7 @@ char server[] = "192.168.159.166";    // name address for Google (using DNS)
 // that you want to connect to (port 80 is default for HTTP):
 WiFiClient client;
 
-void setup() {
+void wificonnect() {
   //Initialize serial and wait for port to open:
   Serial.begin(115200);
 
@@ -69,26 +52,29 @@ void setup() {
 
   Serial.println("\nIP Address obtained");
   printWifiStatus();
-
-  //Upload(654321);
 }
 
-void Upload(int CurrentValue) {
+void setup() {
+  wificonnect();
+}
 
+void Upload(float CurrentValue) {
   Serial.println("\nStarting connection to server...");
   // if you get a connection, report back via serial:
   if (client.connect(server, 8000)) {
     Serial.println("connected to server");
     // Make a HTTP request:
-    //CurrentValue = 12345;
+    Serial.println("%%%%%%%%%%%%");
     client.print("GET /temp/insert/");
     Serial.print("GET /temp/insert/");
-    client.print(CurrentValue);
-    Serial.print(CurrentValue);
+    client.print(CurrentValue, 15);
+    Serial.print(CurrentValue, 15);
     client.println(" HTTP/1.1");
     Serial.println(" HTTP/1.1");
-    client.println("Host: 192.168.159.166");
-    Serial.println("Host: 192.168.159.166");
+    client.println("Host: 192.168.159.166:8000");
+    Serial.println("Host: 192.168.159.166:8000");
+    client.println("User Agent: Energia/1.1");
+    Serial.println("User Agent: Energia/1.1");
     //client.println("Content-Length: 0");
     //Serial.println("Content-Length: 0");
     client.println("Connection: close");
@@ -99,22 +85,25 @@ void Upload(int CurrentValue) {
 }
 
 void loop() {
+  curADCResult = analogRead(A14);
+  normalizedADCRes = (curADCResult * 3.3) / 16384;
+
+  Upload(normalizedADCRes);
   // if there are incoming bytes available
   // from the server, read them and print them:
   while (client.available()) {
-    char c = client.read();
-    Serial.write(c);
+    //char c = client.read();
+    //Serial.write(c);
+    client.flush();
   }
-
+  delay(10000);
   // if the server's disconnected, stop the client:
-  if (!client.connected()) {
+/*  if (!client.connected()) {
     Serial.println();
     Serial.println("disconnecting from server.");
     client.stop();
-
-    // do nothing forevermore:
-    while (true);
-  }
+    wificonnect();
+  }*/
 }
 
 
@@ -134,8 +123,4 @@ void printWifiStatus() {
   Serial.print(rssi);
   Serial.println(" dBm");
 }
-
-
-
-
 
