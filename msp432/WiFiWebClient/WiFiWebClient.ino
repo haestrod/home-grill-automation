@@ -8,7 +8,7 @@
 //#include "driverlib.h"
 
 static volatile uint16_t curADCResult;
-static volatile float normalizedADCRes;
+//static volatile float normalizedADCRes;
 
 // your network name also called SSID
 char ssid[] = "nsa";
@@ -17,8 +17,8 @@ char password[] = "youcantrustthis";
 
 // if you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
-//IPAddress server(50,62,217,1);  // numeric IP for Google (no DNS)
-char server[] = "192.168.159.166";    // name address for Google (using DNS)
+IPAddress server(192,168,159,166);  // numeric IP for server (no DNS)
+//char server[] = "192.168.159.166";    // name address for server (using DNS)
 
 // Initialize the Ethernet client library
 // with the IP address and port of the server
@@ -58,30 +58,33 @@ void setup() {
   wificonnect();
 }
 
-void Upload(float CurrentValue) {
+void Upload(int CurrentValue) {
   Serial.println("\nStarting connection to server...");
   // if you get a connection, report back via serial:
   if (client.connect(server, 8000)) {
     Serial.println("connected to server");
     // Make a HTTP request:
-    client.print("GET /temp/insert/");
-//    client.write(CurrentValue);
-//    client.print(CurrentValue, 20);
-    client.println(" HTTP/1.1");
+    client.println("POST /temp HTTP/1.1");
     client.println("Host: 192.168.159.166:8000");
     client.println("User Agent: Energia/1.1");
-    //client.println("Content-Length: 0");
-    //Serial.println("Content-Length: 0");
+    client.print("Content-Length: ");
+    int thisLength = 8 + getLength(CurrentValue);
+    client.println(thisLength);
+//    client.println("Content-Type: text/csv");
     client.println("Connection: close");
     client.println();
+    client.print("sensor1=");
+    client.println(CurrentValue);
+    
+    delay(300);
   }
 }
 
 void loop() {
   curADCResult = analogRead(A14);
-  normalizedADCRes = (curADCResult * 3.3) / 16384;
+//  normalizedADCRes = (curADCResult * 3.3) / 16384;
 
-  Upload(normalizedADCRes);
+  Upload(curADCResult);
   // if there are incoming bytes available
   // from the server, read them and print them:
   while (client.available()) {
@@ -115,5 +118,25 @@ void printWifiStatus() {
   Serial.print("signal strength (RSSI):");
   Serial.print(rssi);
   Serial.println(" dBm");
+}
+
+// This method calculates the number of digits in the
+// sensor reading.  Since each digit of the ASCII decimal
+// representation is a byte, the number of digits equals
+// the number of bytes:
+
+int getLength(int someValue) {
+  // there's at least one byte:
+  int digits = 1;
+  // continually divide the value by ten,
+  // adding one to the digit count for each
+  // time you divide, until you're at 0:
+  int dividend = someValue / 10;
+  while (dividend > 0) {
+    dividend = dividend / 10;
+    digits++;
+  }
+  // return the number of digits:
+  return digits;
 }
 
