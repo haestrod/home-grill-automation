@@ -64,23 +64,16 @@ void Upload(float CurrentValue) {
   if (client.connect(server, 8000)) {
     Serial.println("connected to server");
     // Make a HTTP request:
-    Serial.println("%%%%%%%%%%%%");
     client.print("GET /temp/insert/");
-    Serial.print("GET /temp/insert/");
-    client.print(CurrentValue, 15);
-    Serial.print(CurrentValue, 15);
+//    client.write(CurrentValue);
+//    client.print(CurrentValue, 20);
     client.println(" HTTP/1.1");
-    Serial.println(" HTTP/1.1");
     client.println("Host: 192.168.159.166:8000");
-    Serial.println("Host: 192.168.159.166:8000");
     client.println("User Agent: Energia/1.1");
-    Serial.println("User Agent: Energia/1.1");
     //client.println("Content-Length: 0");
     //Serial.println("Content-Length: 0");
     client.println("Connection: close");
-    Serial.println("Connection: close");
     client.println();
-    Serial.println("%%%%%%%%%%%%");
   }
 }
 

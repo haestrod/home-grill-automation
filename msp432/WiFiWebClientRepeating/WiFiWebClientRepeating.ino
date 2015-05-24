@@ -41,6 +41,7 @@ char server[] = "192.168.159.166";
 
 unsigned long lastConnectionTime = 0;            // last time you connected to the server, in milliseconds
 const unsigned long postingInterval = 10L * 1000L; // delay between updates, in milliseconds
+double adcresult;
 
 void setup() {
   //Initialize serial and wait for port to open:
@@ -98,11 +99,18 @@ void httpRequest() {
 
   // if there's a successful connection:
   if (client.connect(server, 8000)) {
+    adcresult = analogRead(A14);
     Serial.println("connecting...");
     // send the HTTP PUT request:
-    client.print("GET /temp/insert/");
-    client.print(analogRead(A14));
-    client.println(" HTTP/1.1");
+    String req = "GET /temp/insert/";
+    req += adcresult;
+    req += " HTTP/1.1";
+//    client.print("GET /temp/insert/");
+//    client.print(adcresult);
+//    client.println(" HTTP/1.1");
+    client.println(req);
+    Serial.print("Value out of ADC: ");
+    Serial.println(adcresult);
     client.println("Host: 192.168.159.166");
     client.println("User-Agent: Energia/1.1");
     client.println("Connection: close");
